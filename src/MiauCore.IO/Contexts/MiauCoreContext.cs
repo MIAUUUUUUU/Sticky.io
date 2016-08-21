@@ -1,4 +1,4 @@
-﻿using MiauCore.IO.Models;
+﻿using MiauCore.IO.Areas.Admin.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace MiauCore.IO.Contexts
@@ -10,6 +10,6 @@ namespace MiauCore.IO.Contexts
 
         }
 
-        public static DbSet<User> Users { get; set; }
+        public static DbSet<BaseUser> Users { get; set; }
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace MiauCore.IO.Models
+﻿namespace MiauCore.IO.Areas.Admin.Models
 {
-    public class User
+    public abstract class BaseUser
     {
         public int Id { get; set; }
         public string Login { get; set; }

@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using MiauCore.IO.Contexts;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MiauCore.IO
 {
@@ -24,10 +26,22 @@ namespace MiauCore.IO
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
-        {            
+        {
             var connection = @"Server=DESKTOP-3VG6V6P;Database=MiauCoreWeb;Trusted_Connection=True;";
-            services.AddDbContext<MiauCoreContext>(options => options.UseSqlServer(connection));
+
+            services.AddEntityFramework()
+                    .AddDbContext<MiauCoreContext>(options => options.UseSqlServer(connection));
+
             services.AddMvc();
+
+            services.AddIdentity<IdentityUser, IdentityRole>();
+            //area registering
+            //.Configure<RazorViewEngineOptions>(options =>
+            //{
+            //    options.AreaViewLocationFormats.Clear();
+            //    options.AreaViewLocationFormats.Add("/Areas/{2}/Views/{1}/{0}.cshtml");
+            //    options.AreaViewLocationFormats.Add("/Areas/{2}/Views/Shared/{0}.cshtml");
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,18 +55,19 @@ namespace MiauCore.IO
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            //routing
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
 
-                routes.MapAreaRoute(
-                    name: "defaultAdmin", 
-                    areaName:"admin",
-                    template: "admin/{controller=Login}{action=Index}");
+                routes.MapRoute(
+                    name: "admin",
+                    template: "{area:exists}/{controller=Admin}/{action=Login}/{id?}");
             });
+
+            app.UseIdentity();  
         }
     }
 }
