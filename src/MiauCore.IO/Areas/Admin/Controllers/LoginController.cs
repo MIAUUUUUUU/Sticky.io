@@ -31,7 +31,7 @@ namespace MiauCore.IO.Areas.Admin.Controllers
         public IActionResult Index(BaseUser user)
         {
             //TODO
-            _signInManager.SignInAsync()
+            //_signInManager.SignInAsync()
             return View();
         }
 
