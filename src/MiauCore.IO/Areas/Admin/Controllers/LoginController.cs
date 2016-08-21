@@ -30,7 +30,8 @@ namespace MiauCore.IO.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Index(BaseUser user)
         {
-            _users.Add(user);
+            //TODO
+            _signInManager.SignInAsync()
             return View();
         }
 
