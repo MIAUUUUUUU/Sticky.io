@@ -7,6 +7,8 @@ using MiauCore.IO.Contexts;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using MiauCore.IO.Areas.Admin.Models;
+using MiauCore.IO.Areas.Admin.Data;
 
 namespace MiauCore.IO
 {
@@ -29,19 +31,14 @@ namespace MiauCore.IO
         {
             var connection = @"Server=DESKTOP-3VG6V6P;Database=MiauCoreWeb;Trusted_Connection=True;";
 
-            services.AddEntityFramework()
-                    .AddDbContext<MiauCoreContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(connection));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
             services.AddMvc();
-
-            services.AddIdentity<IdentityUser, IdentityRole>();
-            //area registering
-            //.Configure<RazorViewEngineOptions>(options =>
-            //{
-            //    options.AreaViewLocationFormats.Clear();
-            //    options.AreaViewLocationFormats.Add("/Areas/{2}/Views/{1}/{0}.cshtml");
-            //    options.AreaViewLocationFormats.Add("/Areas/{2}/Views/Shared/{0}.cshtml");
-            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
