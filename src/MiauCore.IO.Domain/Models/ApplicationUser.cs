@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace MiauCore.IO.Areas.Admin.Models
+namespace MiauCore.IO.Domain.Models
 {
     public class ApplicationUser : IdentityUser
     {

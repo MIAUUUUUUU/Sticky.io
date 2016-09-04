@@ -1,15 +1,15 @@
 ﻿using MiauCore.IO.Areas.Admin.Models;
+using MiauCore.IO.Areas.Admin.ViewModels;
+using MiauCore.IO.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MiauCore.IO.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Route("admin/[controller]")]
+    [Route("Admin/[controller]/[action]")]
     [Authorize]
     public class LoginController : Controller
     {
@@ -31,42 +31,47 @@ namespace MiauCore.IO.Areas.Admin.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Index(BaseUser user)
+        public async Task<IActionResult> Index(LoginViewModel model)
         {
-            //TODO
-            var result = await _signInManager.PasswordSignInAsync(user.Login, user.Password, false, false);
+            var result = await _signInManager.PasswordSignInAsync(model.User.Login, model.User.Password, false, false);
 
             if (result.Succeeded)
             {
-                return View("Index", "Home");
+                return Redirect("/Admin/Home/Index");
             }
 
-            return View();
+            return View(model);
+        }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Register()
+        {
+            return View();
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> SignIn(BaseUser baseUser)
+        public async Task<IActionResult> Register(LoginViewModel vm)
         {
-            var user = new ApplicationUser()
-            {
-                UserName = baseUser.Login,
-                PasswordHash = baseUser.Password
-            };
-
-            var result = await _userManager.CreateAsync(user, user.PasswordHash);
-
+            var user = new ApplicationUser { UserName = vm.User.Login, Email = vm.User.Email };
+            var result = await _userManager.CreateAsync(user, vm.User.Password);
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, isPersistent: false);
-                return RedirectToAction("", "");
+                return Redirect("/Home/Index");
             }
 
-            return View("Index", new User
-            {
-                Login = baseUser.Login
-            });
+            vm.IdentityErrors = result.Errors;
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LogOff()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index");
         }
     }
 }

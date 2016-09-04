@@ -1,0 +1,21 @@
+﻿@model MiauCore.IO.Areas.Admin.ViewModels.NewsViewModel
+
+@using (Html.BeginForm("Index", "News", FormMethod.Post))
+{
+    @Html.DisplayNameFor(m => m.News.Title)
+    @Html.TextBoxFor(m => m.News.Title)
+    @Html.DisplayNameFor(m => m.News.BannerImage)
+    @Html.TextBoxFor(m => m.News.BannerImage)
+    @Html.DisplayNameFor(m => m.News.Content)
+    @Html.TextAreaFor(m => m.News.Content)
+    <input type="submit" value="Sign In">
+}
+
+@if (Model != null && Model.Errors != null)
+{
+    foreach (var error in Model.Errors)
+    {
+        <h1 style="color: red;">@error</h1>
+    }
+}
+

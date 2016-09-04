@@ -1,12 +1,14 @@
 ﻿@model MiauCore.IO.Areas.Admin.ViewModels.LoginViewModel
 
-@using (Html.BeginForm("Index", "Login", FormMethod.Post))
+@using (Html.BeginForm("Register", "Login", FormMethod.Post))
 {
     @Html.DisplayNameFor(m => m.User.Login)
     @Html.TextBoxFor(m => m.User.Login)
+    @Html.DisplayNameFor(m => m.User.Email)
+    @Html.TextBoxFor(m => m.User.Email)
     @Html.DisplayNameFor(m => m.User.Password)
     @Html.PasswordFor(m => m.User.Password)
-    <input type="submit" value="Sign In">
+    <input type="submit" value="Sign Up">
 }
 
 @if (Model != null && Model.IdentityErrors != null)
