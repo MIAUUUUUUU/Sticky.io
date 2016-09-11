@@ -1,8 +1,4 @@
-﻿using MiauCore.IO.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using MiauCore.IO.Models;
 
 namespace MiauCore.IO.Areas.Admin.Models
 {

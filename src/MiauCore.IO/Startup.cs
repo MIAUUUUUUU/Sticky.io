@@ -5,10 +5,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using MiauCore.IO.Domain.Data;
+using MiauCore.IO.Data;
 using MiauCore.IO.Domain.Models;
 using MiauCore.IO.Domain.UnitOfWork;
-using MiauCore.IO.Domain.Infraestrutura;
+using MiauCore.IO.Domain.Infra;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using MiauCore.IO.Domain.Repository;
+using MiauCore.IO.Models;
 
 namespace MiauCore.IO
 {
@@ -39,8 +42,8 @@ namespace MiauCore.IO
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
-
+            services.AddEntityFrameworkSqlServer();
+            
             services.AddMvc();
         }
 

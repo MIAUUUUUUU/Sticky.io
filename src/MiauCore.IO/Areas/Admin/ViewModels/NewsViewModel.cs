@@ -1,4 +1,5 @@
 ﻿using MiauCore.IO.Domain.Models;
+using MiauCore.IO.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,6 @@ namespace MiauCore.IO.Areas.Admin.ViewModels
         }
         public News News { get; set; }
         public IList<string> Errors { get; set; }
+        public IEnumerable<Product> Products { get; set; }
     }
 }

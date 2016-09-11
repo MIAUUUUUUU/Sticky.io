@@ -1,0 +1,13 @@
+﻿@model MiauCore.IO.Models.Reward
+
+@using (Html.BeginForm("Update", "Reward", FormMethod.Post))
+{
+    @Html.DisplayNameFor(m => m.Name)
+    @Html.TextBoxFor(m => m.Name)
+    @Html.DisplayNameFor(m => m.Price)
+    @Html.TextBoxFor(m => m.Price)
+    @Html.DisplayNameFor(m => m.Prize)
+    @Html.TextAreaFor(m => m.Prize)
+    <input type="submit" value="Update">
+}
+

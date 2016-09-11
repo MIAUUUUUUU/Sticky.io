@@ -1,0 +1,15 @@
+﻿@model MiauCore.IO.Areas.Admin.ViewModels.RewardViewModel
+
+@using (Html.BeginForm("Add", "Reward", FormMethod.Post))
+{
+    @Html.DisplayNameFor(m => m.Reward.Name)
+    @Html.TextBoxFor(m => m.Reward.Name)
+    @Html.DisplayNameFor(m => m.Reward.Price)
+    @Html.TextBoxFor(m => m.Reward.Price)
+    @Html.DisplayNameFor(m => m.Reward.Prize)
+    @Html.TextAreaFor(m => m.Reward.Prize)
+    @Html.TextAreaFor(m => m.ProductList)
+    @Html.DropDownListFor(m => m.ProductId, Model.ProductList)
+    <input type="submit" value="Add">
+}
+
