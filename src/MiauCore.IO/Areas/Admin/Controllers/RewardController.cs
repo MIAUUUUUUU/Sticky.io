@@ -1,6 +1,6 @@
 ﻿using MiauCore.IO.Areas.Admin.ViewModels;
 using MiauCore.IO.Data;
-using MiauCore.IO.Domain.Repository;
+using MiauCore.IO.Domain.Infra;
 using MiauCore.IO.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,27 +15,26 @@ namespace MiauCore.IO.Areas.Admin.Controllers
     [Route("Admin/[controller]/[action]")]
     public class RewardController : Controller
     {
-        private GenericRepository<Reward> _rewardRepo;
-        private GenericRepository<Product> _productRepo;
+        private IUnitOfWork _unitOfWork;
         private ApplicationDbContext _context;
 
-        public RewardController(ApplicationDbContext context)
+        public RewardController(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<IActionResult> Index()
         {
-            _rewardRepo = new GenericRepository<Reward>(_context);
-            var rewards = await _rewardRepo.List();
+            var rewardRepo = _unitOfWork.CreateRepository<Reward>();
+            var rewards = await rewardRepo.List();
             return View(rewards);
         }
 
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            _productRepo = new GenericRepository<Product>(_context);
-            var products = await _productRepo.List();
+            var productRepo = _unitOfWork.CreateRepository<Product>();
+            var products = await productRepo.List();
 
             var viewModel = new RewardViewModel()
             {
@@ -46,15 +45,17 @@ namespace MiauCore.IO.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(RewardViewModel viewModel)
+        public async Task<IActionResult> Add(RewardViewModel viewModel)
         {
             var product = (Product)viewModel.ProductList.SelectedValue;
             var reward = viewModel.Reward;
             reward.ProductId = product.Id;
             reward.Product = product;
                         
-            _rewardRepo = new GenericRepository<Reward>(_context);
-            _rewardRepo.Add(reward);
+            var rewardRepo = _unitOfWork.CreateRepository<Reward>();
+            rewardRepo.Add(reward);
+
+            await _unitOfWork.SaveChanges();
 
             return RedirectToAction("Index");
         }
@@ -62,8 +63,8 @@ namespace MiauCore.IO.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(int id)
         {
-            _rewardRepo = new GenericRepository<Reward>(_context);
-            var reward = await _rewardRepo.GetById(id);
+            var rewardRepo = _unitOfWork.CreateRepository<Reward>();
+            var reward = await rewardRepo.GetById(id);
 
             if (reward == null)
                 return RedirectToAction("Index");
@@ -72,12 +73,14 @@ namespace MiauCore.IO.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public bool Update(Reward reward)
+        public async Task<bool> Update(Reward reward)
         {
             try
             {
-                _rewardRepo = new GenericRepository<Reward>(_context);
-                _rewardRepo.Update(reward);
+                var rewardRepo = _unitOfWork.CreateRepository<Reward>();
+                rewardRepo.Update(reward);
+                
+                await _unitOfWork.SaveChanges();
 
                 return true;
             }
@@ -88,12 +91,14 @@ namespace MiauCore.IO.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
             try
             {
-                _rewardRepo = new GenericRepository<Reward>(_context);
-                _rewardRepo.Delete(id);
+                var rewardRepo = _unitOfWork.CreateRepository<Reward>();
+                rewardRepo.Delete(id);
+                
+                await _unitOfWork.SaveChanges();
 
                 return true;
             }

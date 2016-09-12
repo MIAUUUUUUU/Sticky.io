@@ -1,5 +1,6 @@
 ﻿using MiauCore.IO.Areas.Admin.ViewModels;
 using MiauCore.IO.Data;
+using MiauCore.IO.Domain.Infra;
 using MiauCore.IO.Domain.Models;
 using MiauCore.IO.Domain.Repository;
 using MiauCore.IO.Models;
@@ -16,35 +17,34 @@ namespace MiauCore.IO.Areas.Admin.Controllers
     [Authorize]
     public class NewsController : Controller
     {
-        private GenericRepository<News> _newsRepo;
-        private GenericRepository<Product> _productRepo;
-        private ApplicationDbContext _context;
+        private IUnitOfWork _unitOfWork;
         private UserManager<ApplicationUser> _userManager;
 
-        public NewsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public NewsController(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
             _userManager = userManager;
         }
 
         public async Task<IActionResult> Index()
         {
-            var news = await _newsRepo.List();
+            var newsRepo = _unitOfWork.CreateRepository<News>();
+            var news = await newsRepo.List();
             return View(news);
         }
 
         [HttpGet]
         public IActionResult Add()
         {
-            _productRepo = new GenericRepository<Product>(_context);
-            var products = _productRepo.List();
+            var productRepo = _unitOfWork.CreateRepository<Product>();
+            var products = productRepo.List();
             return View(products);
         }
 
         [HttpPost]
-        public IActionResult Add(NewsViewModel vm)
+        public async Task<IActionResult> Add(NewsViewModel vm)
         {
-            _newsRepo = new GenericRepository<News>(_context);
+            var newsRepo = _unitOfWork.CreateRepository<News>();
 
             ApplicationUser user = _userManager.FindByNameAsync(User.Identity.Name).Result;
             var news = vm.News;
@@ -52,7 +52,9 @@ namespace MiauCore.IO.Areas.Admin.Controllers
             news.WriteDate = DateTime.Now;
             news.LastRevisionDate = DateTime.Now;
 
-            _newsRepo.Add(news);
+            newsRepo.Add(news);
+
+            await _unitOfWork.SaveChanges();
 
             return RedirectToAction("Index");
         }
@@ -60,16 +62,17 @@ namespace MiauCore.IO.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(int id)
         {
-            var news = await _newsRepo.GetById(id);
+            var newsRepo = _unitOfWork.CreateRepository<News>();
+            var productRepo = _unitOfWork.CreateRepository<Product>();
+
+            var news = await newsRepo.GetById(id);
 
             if (news == null)
                 return RedirectToAction("Index");
 
-            _newsRepo = new GenericRepository<News>(_context);
-
             var viewModel = new NewsViewModel()
             {
-                Products = await _productRepo.List(),
+                Products = await productRepo.List(),
                 News = news
             };
 
@@ -77,14 +80,16 @@ namespace MiauCore.IO.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public bool Update(NewsViewModel vm)
+        public async Task<bool> Update(NewsViewModel vm)
         {
             try
             {
-                _newsRepo = new GenericRepository<News>(_context);
+                var newsRepo = _unitOfWork.CreateRepository<News>();
                 var news = vm.News;
                 news.LastRevisionDate = DateTime.Now;
-                _newsRepo.Update(news);
+                newsRepo.Update(news);
+
+                await _unitOfWork.SaveChanges();
 
                 return true;
             }
@@ -95,12 +100,14 @@ namespace MiauCore.IO.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
             try
             {
-                _newsRepo = new GenericRepository<News>(_context);
-                _newsRepo.Delete(id);
+                var newsRepo = _unitOfWork.CreateRepository<News>();
+                newsRepo.Delete(id);
+
+                await _unitOfWork.SaveChanges();
 
                 return true;
             }
