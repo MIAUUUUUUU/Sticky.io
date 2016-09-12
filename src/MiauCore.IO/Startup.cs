@@ -9,9 +9,6 @@ using MiauCore.IO.Data;
 using MiauCore.IO.Domain.Models;
 using MiauCore.IO.Domain.UnitOfWork;
 using MiauCore.IO.Domain.Infra;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using MiauCore.IO.Domain.Repository;
-using MiauCore.IO.Models;
 
 namespace MiauCore.IO
 {
@@ -57,21 +54,27 @@ namespace MiauCore.IO
             app.UseIdentity();
 
             loggerFactory.AddConsole();
-
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.Use(async (context, next) =>
+                {
+                    await next();
+                    if (context.Response.StatusCode == 404)
+                    {
+                        context.Request.Path = "/Home";
+                        await next();
+                    }
+                });
+                app.UseDeveloperExceptionPage();
             }
-            //routing
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-
-                routes.MapRoute(
-                    name: "admin",
-                    template: "{area:exists}/{controller=Admin}/{action=Login}/{id?}");
             });
         }
     }
