@@ -43,6 +43,8 @@ namespace MiauCore.IO
                 .AddDefaultTokenProviders();
 
             services.AddEntityFrameworkSqlServer();
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
             
             services.AddMvc();
         }

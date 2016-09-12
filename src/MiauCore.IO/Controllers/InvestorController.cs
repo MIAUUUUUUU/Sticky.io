@@ -1,26 +1,26 @@
-﻿using MiauCore.IO.Data;
-using MiauCore.IO.Domain.Repository;
+﻿using MiauCore.IO.Domain.Infra;
 using MiauCore.IO.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace MiauCore.IO.Controllers
 {
     [Route("api/[controller]")]
     public class InvestorController : Controller
     {
-        private GenericRepository<Investor> _repoInvestor;
-        private ApplicationDbContext _context;
+        private IUnitOfWork _unitOfWork;
 
-        public InvestorController(ApplicationDbContext context)
+        public InvestorController(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpPost]
-        public void Post([FromBody]Investor investor)
+        public async Task Post([FromBody]Investor investor)
         {
-            _repoInvestor = new GenericRepository<Investor>(_context);
-            _repoInvestor.Add(investor);
+            var repoInvestor = _unitOfWork.CreateRepository<Investor>();
+            repoInvestor.Add(investor);
+            await _unitOfWork.SaveChanges();
         }
     }
 }

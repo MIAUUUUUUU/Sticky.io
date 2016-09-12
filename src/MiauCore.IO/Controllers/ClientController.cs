@@ -9,19 +9,20 @@ namespace MiauCore.IO.Controllers
     [Route("api/[controller]")]
     public class ClientController : Controller
     {
-        private GenericRepository<Client> _repoClient;
+        private IUnitOfWork _unitOfWork;
         private ApplicationDbContext _context;
 
-        public ClientController(ApplicationDbContext context)
+        public ClientController(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpPost]
-        public void Post([FromBody]Client client)
+        public async void Post([FromBody]Client client)
         {
-            _repoClient = new GenericRepository<Client>(_context);
-            _repoClient.Add(client);
+            var repoClient = _unitOfWork.CreateRepository<Client>();
+            repoClient.Add(client);
+            await _unitOfWork.SaveChanges();
         }
     }
 }
