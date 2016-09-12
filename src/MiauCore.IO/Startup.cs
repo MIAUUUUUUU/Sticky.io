@@ -45,6 +45,12 @@ namespace MiauCore.IO
             services.AddEntityFrameworkSqlServer();
             
             services.AddMvc();
+
+            services.Configure<IISOptions>(options => {
+                options.AutomaticAuthentication = false;
+                options.ForwardClientCertificate = true;
+                options.ForwardWindowsAuthentication = false;    
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
