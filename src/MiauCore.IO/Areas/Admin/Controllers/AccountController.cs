@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace MiauCore.IO.Areas.Admin.Controllers
 {
+    [Authorize]
     [Area("Admin")]
     [Route("Admin/[controller]/[action]")]
-    [Authorize]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

@@ -1,4 +1,4 @@
-﻿using MiauCore.IO.Data;
+﻿using MiauCore.IO.Domain.Infra;
 using MiauCore.IO.Domain.Repository;
 using MiauCore.IO.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -13,18 +13,17 @@ namespace MiauCore.IO.Areas.Admin.Controllers
     [Authorize]
     public class ProductController : Controller
     {
-        private GenericRepository<Product> _productRepo;
-        private ApplicationDbContext _context;
+        private IUnitOfWork _unitOfWork;
 
-        public ProductController(ApplicationDbContext context)
+        public ProductController(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<IActionResult> Index()
         {
-            _productRepo = new GenericRepository<Product>(_context);
-            var products = await _productRepo.List();
+            var productRepo = _unitOfWork.CreateRepository<Product>();
+            var products = await productRepo.List();
             return View(products);
         }
 
@@ -35,10 +34,12 @@ namespace MiauCore.IO.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(Product product)
+        public async Task<IActionResult> Add(Product product)
         {
-            _productRepo = new GenericRepository<Product>(_context);
-            _productRepo.Add(product);
+            var productRepo = _unitOfWork.CreateRepository<Product>();
+            productRepo.Add(product);
+
+            await _unitOfWork.SaveChanges();
 
             return RedirectToAction("Index");
         }
@@ -46,8 +47,8 @@ namespace MiauCore.IO.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(int id)
         {
-            _productRepo = new GenericRepository<Product>(_context);
-            var product = await _productRepo.GetById(id);
+            var productRepo = _unitOfWork.CreateRepository<Product>();
+            var product = await productRepo.GetById(id);
 
             if (product == null)
                 return RedirectToAction("Index");
@@ -56,12 +57,14 @@ namespace MiauCore.IO.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public bool Update(Product product)
+        public async Task<bool> Update(Product product)
         {
             try
             {
-                _productRepo = new GenericRepository<Product>(_context);
-                _productRepo.Update(product);
+                var productRepo = _unitOfWork.CreateRepository<Product>();
+                productRepo.Update(product);
+
+                await _unitOfWork.SaveChanges();
 
                 return true;
             }
@@ -72,12 +75,14 @@ namespace MiauCore.IO.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
             try
             {
-                _productRepo = new GenericRepository<Product>(_context);
-                _productRepo.Delete(id);
+                var productRepo = _unitOfWork.CreateRepository<Product>();
+                productRepo.Delete(id);
+
+                await _unitOfWork.SaveChanges();
 
                 return true;
             }
