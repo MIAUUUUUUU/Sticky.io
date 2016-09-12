@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        // commonjs -> import/export | amd -> require/modules
+        "module": "commonjs",
+
+        // Transpila de TypeScript (es6) pra JavaScript (es5)
+        "target": "es5",
+
+        // Remove a obrigatoriedade dos Arquivos de declaração (*.d.ts) 
+        "declaration": true,
+        "declarationDir": "typings"
+    }
+}
