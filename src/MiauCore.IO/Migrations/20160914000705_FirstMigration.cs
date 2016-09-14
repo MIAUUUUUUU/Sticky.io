@@ -76,8 +76,8 @@ namespace MiauCore.IO.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ProductName = table.Column<string>(nullable: true),
-                    ProductType = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    Type = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -159,12 +159,13 @@ namespace MiauCore.IO.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ApplicationUserId = table.Column<string>(nullable: true),
                     BannerImage = table.Column<string>(nullable: true),
                     Content = table.Column<string>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
                     LastRevisionDate = table.Column<DateTime>(nullable: false),
-                    ProductId = table.Column<int>(nullable: true),
-                    PublishedById = table.Column<string>(nullable: true),
+                    ProductId = table.Column<int>(nullable: false),
+                    PublishedBy = table.Column<string>(nullable: true),
                     Title = table.Column<string>(nullable: true),
                     WriteDate = table.Column<DateTime>(nullable: false)
                 },
@@ -172,17 +173,17 @@ namespace MiauCore.IO.Migrations
                 {
                     table.PrimaryKey("PK_News", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_News_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_News_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_News_AspNetUsers_PublishedById",
-                        column: x => x.PublishedById,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -332,14 +333,14 @@ namespace MiauCore.IO.Migrations
                 column: "RewardId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_News_ApplicationUserId",
+                table: "News",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_News_ProductId",
                 table: "News",
                 column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_News_PublishedById",
-                table: "News",
-                column: "PublishedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rewards_ProductId",

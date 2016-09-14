@@ -144,6 +144,8 @@ namespace MiauCore.IO.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("ApplicationUserId");
+
                     b.Property<string>("BannerImage");
 
                     b.Property<string>("Content");
@@ -152,9 +154,9 @@ namespace MiauCore.IO.Migrations
 
                     b.Property<DateTime>("LastRevisionDate");
 
-                    b.Property<int?>("ProductId");
+                    b.Property<int>("ProductId");
 
-                    b.Property<string>("PublishedById");
+                    b.Property<string>("PublishedBy");
 
                     b.Property<string>("Title");
 
@@ -162,9 +164,9 @@ namespace MiauCore.IO.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("PublishedById");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("News");
                 });
@@ -174,9 +176,9 @@ namespace MiauCore.IO.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ProductName");
+                    b.Property<string>("Name");
 
-                    b.Property<string>("ProductType");
+                    b.Property<string>("Type");
 
                     b.HasKey("Id");
 
@@ -338,13 +340,14 @@ namespace MiauCore.IO.Migrations
 
             modelBuilder.Entity("MiauCore.IO.Models.News", b =>
                 {
+                    b.HasOne("MiauCore.IO.Domain.Models.ApplicationUser")
+                        .WithMany("PublishedNews")
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("MiauCore.IO.Models.Product", "Product")
                         .WithMany("News")
-                        .HasForeignKey("ProductId");
-
-                    b.HasOne("MiauCore.IO.Domain.Models.ApplicationUser", "PublishedBy")
-                        .WithMany("PublishedNews")
-                        .HasForeignKey("PublishedById");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MiauCore.IO.Models.Reward", b =>
