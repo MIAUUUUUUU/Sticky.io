@@ -5,29 +5,29 @@
 @inject UserManager<ApplicationUser> UserManager
 
 <!DOCTYPE html>
-
 <html>
-<head>
-    <meta name="viewport" content="width=device-width" />
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@ViewBag.Title</title>
-</head>
-<body>
-
+    <link asp-href-include="~/css/custom-bootstrap.css" rel="stylesheet" />
+  </head>
+  <body>
     @if (SignInManager.IsSignedIn(User))
     {
-        <form asp-area="Admin" asp-controller="Login" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
-                </li>
-                <li>
-                    <button type="submit" class="btn btn-link navbar-btn navbar-link">Log off</button>
-                </li>
-            </ul>
-        </form>
+      <form asp-area="Admin" asp-controller="Login" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+          </li>
+          <li>
+            <button type="submit" class="btn btn-link navbar-btn navbar-link">Log off</button>
+          </li>
+        </ul>
+      </form>
     }
-    <div>
-        @RenderBody()
-    </div>
-</body>
+    <main role="main">
+      @RenderBody()
+    </main>
+  </body>
 </html>

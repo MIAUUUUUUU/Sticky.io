@@ -1,19 +1,31 @@
 ﻿@model MiauCore.IO.Areas.Admin.ViewModels.LoginViewModel
 
-@using (Html.BeginForm("Index", "Login", FormMethod.Post))
-{
-    @Html.DisplayNameFor(m => m.User.Login)
-    @Html.TextBoxFor(m => m.User.Login)
-    @Html.DisplayNameFor(m => m.User.Password)
-    @Html.PasswordFor(m => m.User.Password)
-    <input type="submit" value="Sign In">
+@{
+    ViewBag.Title = "Account - Login";
 }
 
-@if (Model != null && Model.IdentityErrors != null)
-{
-    foreach (var error in Model.IdentityErrors)
+<main role="main" class="col-md-6 col-md-offset-3">
+    <h1>Login</h1>
+
+    <form asp-area="Admin" asp-controller="Login" asp-action="Index" method="post">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input id="username" class="form-control" type="text" />
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input id="password" class="form-control" type="password" />
+        </div>
+        <input class="btn btn-primary" type="submit" value="Login">
+    </form>
+
+    @if (Model != null && Model.IdentityErrors != null)
     {
-        <h1 style="color: red;">@error.Description</h1>
+        foreach (var error in Model.IdentityErrors)
+        {
+            <p class="alert ">@error.Description</p>
+        }
     }
-}
+</main>
 
+<script asp-src-include="~/js/login.js"></script>
