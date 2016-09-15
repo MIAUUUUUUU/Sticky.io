@@ -11,7 +11,6 @@ namespace MiauCore.IO.Domain.Services
     public class NewsService
     {
         private ApplicationDbContext _context;
-        private GenericRepository<News> _newsRepo;
 
         public NewsService(ApplicationDbContext context)
         {

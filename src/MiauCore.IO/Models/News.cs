@@ -1,6 +1,7 @@
 ﻿using MiauCore.IO.Domain.Models;
 using MiauCore.IO.Models;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MiauCore.IO.Models
 {
@@ -12,8 +13,10 @@ namespace MiauCore.IO.Models
         public bool IsActive { get; set; }
         public string BannerImage { get; set; }
         public DateTime WriteDate { get; set; }
-        public DateTime LastRevisionDate { get; set; }
+        public DateTime LastRevisionDate { get; set; }        
+        public int ProductId { get; set; }
+        [ForeignKey("ProductId")]
         public Product Product { get; set; }
-        public ApplicationUser PublishedBy { get; set; }
+        public string PublishedBy { get; set; }
     }
 }

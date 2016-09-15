@@ -11,6 +11,7 @@ namespace MiauCore.IO.Models
         public decimal Price { get; set; }
         public string Prize { get; set; }
         public int ProductId { get; set; }
+        [ForeignKey("ProductId")]
         public Product Product { get; set; }
         public List<ClientReward> ClientRewards { get; set; }
         public List<InvestorReward> InvestorRewards { get; set; }

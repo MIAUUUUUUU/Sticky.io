@@ -10,7 +10,6 @@ namespace MiauCore.IO.Controllers
     public class ClientController : Controller
     {
         private IUnitOfWork _unitOfWork;
-        private ApplicationDbContext _context;
 
         public ClientController(IUnitOfWork unitOfWork)
         {
