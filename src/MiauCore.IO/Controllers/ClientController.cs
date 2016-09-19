@@ -1,6 +1,4 @@
-﻿using MiauCore.IO.Data;
-using MiauCore.IO.Domain.Infra;
-using MiauCore.IO.Domain.Repository;
+﻿using MiauCore.IO.Domain.Infra;
 using MiauCore.IO.Models;
 using Microsoft.AspNetCore.Mvc;
 

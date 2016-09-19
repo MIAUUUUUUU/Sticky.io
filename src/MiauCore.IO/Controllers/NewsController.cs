@@ -11,17 +11,14 @@ namespace MiauCore.IO.Controllers
     public class NewsController : Controller
     {
         private NewsService _newsService;
-        private ApplicationDbContext _context;
-        public NewsController(ApplicationDbContext context)
+        public NewsController(NewsService newsService)
         {
-            _context = context;
+            _newsService = newsService;
         }
 
         [HttpGet]
         public async Task<ICollection<News>> Get()
         {
-            _newsService = new NewsService(_context);
-
             var news = await _newsService.ListNews();
 
             return news;
@@ -30,8 +27,6 @@ namespace MiauCore.IO.Controllers
         [HttpGet("{id}")]
         public async Task<News> Get(int id)
         {
-            _newsService = new NewsService(_context);
-
             var news = await _newsService.GetNews(id);
 
             return news;
