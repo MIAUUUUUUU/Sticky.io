@@ -1,0 +1,21 @@
+{
+  "name": "sticky.io-admin",
+  "version": "1.0.0",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "author": "Vitor Luiz Cavalcanti <vitorluizc@outlook.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "awesome-typescript-loader": "^2.2.4",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^2.3.2",
+    "typescript": "^2.0.0",
+    "vinyl-named": "^1.1.0",
+    "webpack-stream": "^3.2.0"
+  },
+  "dependencies": {
+    "jquery": "^3.1.0"
+  }
+}

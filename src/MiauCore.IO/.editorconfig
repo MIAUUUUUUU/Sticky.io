@@ -1,0 +1,27 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = crlf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{.js,.jsx,.json}]
+tab_width = 4
+indent_size = 4
+indent_style = space
+
+[*.{.ts,.tsx}]
+tab_width = 4
+indent_size = 4
+indent_style = space
+
+[*{.html,.cshtml}]
+tab_width = 2
+indent_size = 2
+indent_style = space
+
+[*{.css,.scss}]
+tab_width = 2
+indent_size = 2
+indent_style = space
