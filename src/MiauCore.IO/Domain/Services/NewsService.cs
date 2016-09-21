@@ -31,7 +31,7 @@ namespace MiauCore.IO.Domain.Services
         {
             var news = await _context.News
                 .Include(product => product.Product)
-                .Include(user => user.PublishedBy)
+                //.Include(user => user.PublishedBy)
                 .ToListAsync();
 
             return news;

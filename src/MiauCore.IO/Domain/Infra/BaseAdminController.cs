@@ -8,7 +8,6 @@ namespace MiauCore.IO.Domain.Infra
 {
     [Authorize]
     [Area("Admin")]
-    [Route("Admin/[controller]/[action]")]
     public abstract class BaseAdminController<T> : Controller where T : class, IGenericEntity
     {
         private IUnitOfWork _unitOfWork;

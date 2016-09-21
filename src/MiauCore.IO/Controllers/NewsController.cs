@@ -17,11 +17,10 @@ namespace MiauCore.IO.Controllers
         }
 
         [HttpGet]
-        public async Task<ICollection<News>> Get()
+        public async Task<IActionResult> Get()
         {
             var news = await _newsService.ListNews();
-
-            return news;
+            return Ok(news);
         }
 
         [HttpGet("{id}")]

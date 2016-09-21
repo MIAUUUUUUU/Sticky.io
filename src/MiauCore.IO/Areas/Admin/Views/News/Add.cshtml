@@ -1,0 +1,37 @@
+﻿@model MiauCore.IO.Areas.Admin.ViewModels.NewsViewModel
+
+@{
+    ViewBag.Title = "Account - Register";
+}
+
+<main role="main" class="col-md-6 col-md-offset-3">
+    <h1>News - Register</h1>
+
+    <form asp-controller="Admin/News/Add" method="post">
+        <div class="form-group">
+            <label asp-for="News.Title"></label>
+            <input id="title" asp-for="News.Title" class="form-control" type="text" />
+        </div>
+        <div class="form-group">
+            <label asp-for="News.BannerImage"></label>
+            <input id="bannerimage" asp-for="News.BannerImage" class="form-control" type="text" />
+        </div>
+        <div class="form-group">
+            <label asp-for="News.Content"></label>
+            <input id="content" asp-for="News.Content" class="form-control" type="text" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Products">Products</label>
+            <select id="Products" asp-for="ProductId" class="form-control">
+                @foreach (var product in Model.Products)
+                { 
+                    <option value="@product.Id">@product.Name</option>
+                }
+            </select>
+        </div>
+
+        <input class="btn btn-primary" type="submit" value="Insert News">
+    </form>
+</main>
+

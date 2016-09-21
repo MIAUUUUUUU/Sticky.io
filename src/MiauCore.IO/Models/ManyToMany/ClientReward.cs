@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace MiauCore.IO.Models.ManyToMany
+﻿namespace MiauCore.IO.Models.ManyToMany
 {
     public class ClientReward
     {

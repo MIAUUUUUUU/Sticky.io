@@ -12,6 +12,7 @@ namespace MiauCore.IO
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
+                //.UseUrls("*.*.*.*:9999")
                 .Build();
 
             host.Run();

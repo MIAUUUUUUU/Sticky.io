@@ -9,6 +9,7 @@ using MiauCore.IO.Data;
 using MiauCore.IO.Domain.Models;
 using MiauCore.IO.Domain.UnitOfWork;
 using MiauCore.IO.Domain.Infra;
+using MiauCore.IO.Domain.Services;
 
 namespace MiauCore.IO
 {
@@ -42,6 +43,7 @@ namespace MiauCore.IO
             services.AddEntityFrameworkSqlServer();
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<NewsService, NewsService>();
             
             services.AddMvc();
         }
@@ -75,7 +77,14 @@ namespace MiauCore.IO
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapAreaRoute(
+                    name: "Admin",
+                    areaName: "Admin",
+                    template: "Admin/{controller=Account}/{action=Index}/{id?}");
             });
+
+            
         }
     }
 }

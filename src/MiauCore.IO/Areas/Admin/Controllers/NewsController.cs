@@ -2,6 +2,7 @@
 using MiauCore.IO.Domain.Infra;
 using MiauCore.IO.Domain.Models;
 using MiauCore.IO.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,19 +10,20 @@ using System.Threading.Tasks;
 
 namespace MiauCore.IO.Areas.Admin.Controllers
 {
-    public class NewsController : BaseAdminController<News>
+    [Authorize]
+    [Area("Admin")]
+    public class NewsController : Controller
     {
         private IUnitOfWork _unitOfWork;
         private UserManager<ApplicationUser> _userManager;
 
         public NewsController(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
-            :base(unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _userManager = userManager;
         }
 
-        public override async Task<IActionResult> Index()
+        public async Task<IActionResult> Index()
         {
             var newsRepo = _unitOfWork.CreateRepository<News>();
             var news = await newsRepo.List();
@@ -29,33 +31,38 @@ namespace MiauCore.IO.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public override IActionResult Add()
+        public async Task<IActionResult> Add()
         {
             var productRepo = _unitOfWork.CreateRepository<Product>();
-            var products = productRepo.List();
-            return View(products);
+            var products = await productRepo.List();
+            var viewModel = new NewsViewModel
+            {
+                Products = products
+            };
+            
+            return View(viewModel);
         }
 
         [HttpPost]
-        public override async Task<IActionResult> Add(News news)
+        public async Task<IActionResult> Add(NewsViewModel viewModel)
         {
             var newsRepo = _unitOfWork.CreateRepository<News>();
-
+            var news = viewModel.News;
             ApplicationUser user = _userManager.FindByNameAsync(User.Identity.Name).Result;
             
             news.PublishedBy = user.UserName;
             news.WriteDate = DateTime.Now;
             news.LastRevisionDate = DateTime.Now;
-
+            news.ProductId = viewModel.ProductId;
             newsRepo.Add(news);
 
             await _unitOfWork.SaveChanges();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "News");
         }
 
         [HttpGet]
-        public override async Task<IActionResult> Update(int id)
+        public async Task<IActionResult> Update(int id)
         {
             var newsRepo = _unitOfWork.CreateRepository<News>();
             var productRepo = _unitOfWork.CreateRepository<Product>();
@@ -63,7 +70,7 @@ namespace MiauCore.IO.Areas.Admin.Controllers
             var news = await newsRepo.GetById(id);
 
             if (news == null)
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "News");
 
             var viewModel = new NewsViewModel()
             {
@@ -75,41 +82,28 @@ namespace MiauCore.IO.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public override async Task<bool> Update(News news)
+        public async Task<IActionResult> Update(NewsViewModel viewModel)
         {
-            try
-            {
-                var newsRepo = _unitOfWork.CreateRepository<News>();
-                
-                news.LastRevisionDate = DateTime.Now;
-                newsRepo.Update(news);
+            var newsRepo = _unitOfWork.CreateRepository<News>();
+            var news = viewModel.News;
+            news.LastRevisionDate = DateTime.Now;
+            news.ProductId = viewModel.ProductId;
+            newsRepo.Update(news);
 
-                await _unitOfWork.SaveChanges();
+            await _unitOfWork.SaveChanges();
 
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            return RedirectToAction("Index", "News");
         }
 
-        [HttpPost]
-        public override async Task<bool> Delete(int id)
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
         {
-            try
-            {
-                var newsRepo = _unitOfWork.CreateRepository<News>();
-                newsRepo.Delete(id);
+            var newsRepo = _unitOfWork.CreateRepository<News>();
+            newsRepo.Delete(id);
 
-                await _unitOfWork.SaveChanges();
+            await _unitOfWork.SaveChanges();
 
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            return RedirectToAction("Index", "News");
         }
     }
 }
