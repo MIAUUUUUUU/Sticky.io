@@ -25,19 +25,23 @@ const config = {
 gulp.task("transpile-typescript", function () {
     var tsFiles = gulp.src("./Scripts/**/*.main.ts", { base: "./Scripts" });
 
-    return tsFiles
-        .pipe(named(function (file) {
-            let filename = "";
+    function keepDir(baseDir = "./Scripts", ext = /\.tsx?$/, suffix = /\.main$/) {
+        baseDir = path.normalize(`${__dirname}/${path.normalize(baseDir)}`);
+
+        return function (file) {
+            var filename = "";
 
             // Remove static path
-            filename = file.path.replace(path.join(__dirname, path.normalize("./Scripts")), "");
-            // Remove .main
-            filename = filename.replace(".main", "");
-            // Remove .ts
-            filename = filename.replace(".ts", "");
+            filename = file.path.replace(baseDir, "");
+            filename = filename.replace(ext, "");
+            filename = filename.replace(suffix, "");
 
-            return filename;
-        }))
+            return path.posix.normalize(filename);
+        };
+    }
+
+    return tsFiles
+        .pipe(named(keepDir()))
         .pipe(webpack(config))
         .pipe(gulp.dest("./wwwroot/js"));
 });

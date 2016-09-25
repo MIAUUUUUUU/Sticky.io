@@ -4,28 +4,30 @@
     ViewBag.Title = "Account - Login";
 }
 
-<main role="main" class="col-md-6 col-md-offset-3">
-    <h1>Login</h1>
+<form id="form-login" class="col-md-6 col-md-offset-3 gap-top-x-lg" asp-controller="Admin/Account/Index" method="post">
+  <h1>Login</h1>
 
-    <form asp-controller="Admin/Account/Index" method="post">
-        <div class="form-group">
-            <label asp-for="User.Login">Username</label>
-            <input id="username" asp-for="User.Login" class="form-control" type="text" />
-        </div>
-        <div class="form-group">
-            <label asp-for="User.Password">Password</label>
-            <input id="password" asp-for="User.Password" class="form-control" type="password" />
-        </div>
-        <input class="btn btn-primary" type="submit" value="Login">
-    </form>
+  <div class="form-group">
+    <label asp-for="User.Login"></label>
+    <input id="username" asp-for="User.Login" class="form-control" type="text" />
+  </div>
+  <div class="form-group">
+    <label asp-for="User.Password"></label>
+    <input id="password" asp-for="User.Password" class="form-control" type="password" />
+  </div>
+  <input id="do-login" class="btn btn-primary" type="submit" value="Login">
 
-    @if (Model != null && Model.IdentityErrors != null)
-    {
-        foreach (var error in Model.IdentityErrors)
-        {
-            <p class="alert ">@error.Description</p>
-        }
+  <div id="errors" class="alert alert-danger gap-top-md">
+    @if (Model != null && Model.IdentityErrors != null) {
+      foreach (var error in Model.IdentityErrors)
+      {
+        <p>@error.Description</p>
+      }
     }
-</main>
+  </div>
+</form>
 
-<script asp-src-include="~/js/login.js"></script>
+@section scripts {
+  <script asp-src-include="~/js/login.js"></script>
+}
+

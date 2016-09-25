@@ -1,0 +1,13 @@
+﻿$-directions: (top, right, bottom, left);
+
+.gap { box-sizing: border-box; }
+
+@each $-label, $-size in $gap {
+  .gap-#{$-label} { margin: $-size; }
+  .gap-in-#{$-label} { padding: $-size; }
+
+  @each $-direction in $-directions {
+    .gap-#{$-direction}-#{$-label} { margin-#{$-direction}: $-size; }
+    .gap-in-#{$-direction}-#{$-label} { padding-#{$-direction}: $-size; }
+  }
+}
