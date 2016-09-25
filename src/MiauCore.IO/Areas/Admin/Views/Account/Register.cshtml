@@ -18,7 +18,7 @@
     <label asp-for="User.Password">Password</label>
     <input id="password" asp-for="User.Password" class="form-control" type="password" />
   </div>
-  <input id="do-register" class="btn btn-primary" type="submit" value="Login">
+  <input id="do-register" class="btn btn-primary" type="submit" value="Login" />
   <div id="errors" class="alert alert-danger gap-top-md">
     @if (Model != null && Model.IdentityErrors != null)
     {

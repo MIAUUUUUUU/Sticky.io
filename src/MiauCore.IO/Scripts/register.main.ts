@@ -1,7 +1,7 @@
 import Account from "./Model/Account";
 import { element } from "./Helpers/DOM";
 
-interface UILoginElements {
+interface UIRegisterElements {
     formLogin?: HTMLFormElement,
     inputUsername?: HTMLInputElement,
     inputPassword?: HTMLInputElement,
@@ -21,7 +21,7 @@ function paragraph(text: string): HTMLParagraphElement {
 class UI {
     account: Account;
 
-    elements: UILoginElements;
+    elements: UIRegisterElements;
 
     constructor() {
         // Get all Elements
@@ -40,7 +40,7 @@ class UI {
         this.elements.btnLogin.addEventListener("click", (e: Event) => {
             let username = this.elements.inputUsername.value;
             let password = this.elements.inputPassword.value;
-            let email = this.elements.inputPassword.value;
+            let email = this.elements.inputEMail.value;
 
             this.account = new Account(username, password, email);
 
