@@ -141,7 +141,7 @@
 	        this.elements.btnLogin.addEventListener("click", function (e) {
 	            var username = _this.elements.inputUsername.value;
 	            var password = _this.elements.inputPassword.value;
-	            var email = _this.elements.inputPassword.value;
+	            var email = _this.elements.inputEMail.value;
 	            _this.account = new Account_1.default(username, password, email);
 	            if (_this.isValid) {
 	                _this.elements.formLogin.submit();

@@ -4,7 +4,7 @@
     ViewBag.Title = "Account - Register";
 }
 
-@*<form id="form-register" class="col-md-6 col-md-offset-3 gap-top-x-lg" asp-controller="Admin/Account/Register" method="post">
+<form id="form-register" class="col-md-6 col-md-offset-3 gap-top-x-lg" asp-controller="Admin/Account/Register" method="post">
   <h1>Register</h1>
   <div class="form-group">
     <label asp-for="User.Login"></label>
@@ -18,7 +18,7 @@
     <label asp-for="User.Password">Password</label>
     <input id="password" asp-for="User.Password" class="form-control" type="password" />
   </div>
-  <input id="do-register" class="btn btn-primary" type="submit" value="Login">
+  <input id="do-register" class="btn btn-primary" type="submit" value="Login" />
   <div id="errors" class="alert alert-danger gap-top-md">
     @if (Model != null && Model.IdentityErrors != null)
     {
@@ -28,13 +28,13 @@
       }
     }
   </div>
-</form>*@
+</form>
 
-@*@section scripts {
+@section scripts {
   <script asp-src-include="~/js/register.js"></script>
-}*@
+}
 
-<main role="main" class="col-md-6 col-md-offset-3">
+@*<main role="main" class="col-md-6 col-md-offset-3">
     <h1>Register</h1>
 
     <form asp-area="Admin" asp-controller="Account" asp-action="Register" method="post">
@@ -63,4 +63,4 @@
             <p>@error.Description</p>
         }
     }
-</main>
+</main>*@
