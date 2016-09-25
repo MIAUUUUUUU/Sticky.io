@@ -5,6 +5,7 @@ interface UILoginElements {
     formLogin?: HTMLFormElement,
     inputUsername?: HTMLInputElement,
     inputPassword?: HTMLInputElement,
+    inputEMail?: HTMLInputElement,
     btnLogin?: HTMLElement,
     errorContainer?: HTMLElement
 }
@@ -25,10 +26,11 @@ class UI {
     constructor() {
         // Get all Elements
         this.elements = {
-            formLogin: element("#form-login", HTMLFormElement),
+            formLogin: element("#form-register", HTMLFormElement),
             inputUsername: element("#username", HTMLInputElement),
             inputPassword: element("#password", HTMLInputElement),
-            btnLogin: element("#do-login", HTMLElement),
+            inputEMail: element("#email", HTMLInputElement),
+            btnLogin: element("#do-register", HTMLElement),
             errorContainer: element("#errors", HTMLElement)
         };
 
@@ -38,8 +40,9 @@ class UI {
         this.elements.btnLogin.addEventListener("click", (e: Event) => {
             let username = this.elements.inputUsername.value;
             let password = this.elements.inputPassword.value;
+            let email = this.elements.inputPassword.value;
 
-            this.account = new Account(username, password);
+            this.account = new Account(username, password, email);
 
             if (this.isValid) {
                 this.elements.formLogin.submit();
@@ -56,9 +59,11 @@ class UI {
         this.elements.errorContainer.innerHTML = null;
 
         if (!this.account.IsValidUsername) {
-            error = paragraph("Invalid username!");
+            error = paragraph("Empty or invalid username!");
+        } else if (!this.account.IsValidEMail) {
+            error = paragraph("Empty or invalid email address!");
         } else if (!this.account.IsValidPassword) {
-            error = paragraph("Invalid password!");
+            error = paragraph("Empty or invalid password!");
         }
 
         if (error === null) return true;
