@@ -20,7 +20,7 @@ namespace MiauCore.IO
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                //.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
 
             builder.AddEnvironmentVariables();
@@ -56,6 +56,13 @@ namespace MiauCore.IO
             app.UseIdentity();
 
             loggerFactory.AddConsole();
+
+            app.UseCors(builder => 
+            {
+                builder.AllowAnyOrigin();
+                builder.AllowAnyMethod();
+                builder.AllowAnyHeader();
+            });
             
             if (env.IsDevelopment())
             {
@@ -74,17 +81,12 @@ namespace MiauCore.IO
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute("Admin", "{area:exists}/{controller=Account}/{action=Index}/{id?}");
+
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-
-                routes.MapAreaRoute(
-                    name: "Admin",
-                    areaName: "Admin",
-                    template: "Admin/{controller=Account}/{action=Index}/{id?}");
-            });
-
-            
+                    template: "{controller=Home}/{action=Index}/{id?}");                
+            });            
         }
     }
 }

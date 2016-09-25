@@ -16,11 +16,13 @@ namespace MiauCore.IO.Controllers
         }
 
         [HttpPost]
-        public async Task Post([FromBody]Investor investor)
+        public async Task<IActionResult> Post([FromBody]Investor investor)
         {
             var repoInvestor = _unitOfWork.CreateRepository<Investor>();
             repoInvestor.Add(investor);
             await _unitOfWork.SaveChanges();
+
+            return Ok();
         }
     }
 }

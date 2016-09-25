@@ -7,7 +7,6 @@ namespace MiauCore.IO.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
-        public virtual ICollection<News> News { get; set; }
         public virtual ICollection<Reward> Rewards { get; set; }
     }
 }

@@ -1,12 +1,11 @@
-﻿using MiauCore.IO.Data;
-using MiauCore.IO.Domain.Services;
-using MiauCore.IO.Models;
+﻿using MiauCore.IO.Domain.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MiauCore.IO.Controllers
 {
+    [DisableCors]
     [Route("api/[controller]")]
     public class NewsController : Controller
     {
@@ -24,11 +23,18 @@ namespace MiauCore.IO.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<News> Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
             var news = await _newsService.GetNews(id);
 
-            return news;
+            if (news != null && news.IsActive)
+            {                
+                return Ok(news);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
     }
 }
