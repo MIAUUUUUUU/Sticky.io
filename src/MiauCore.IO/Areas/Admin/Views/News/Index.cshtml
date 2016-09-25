@@ -1,46 +1,50 @@
 ﻿@model List<MiauCore.IO.Models.News>
 
 @{
-    ViewBag.Title = "Account - Register";
+    ViewBag.Title = "Account - Subscribe";
 }
 
 <main role="main" class="col-md-6 col-md-offset-3">
-    <h1>News</h1>
+  <h1>News</h1>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>WriteDate</th>
-                <th>LastRevisionDate</th>
-                <th>PublishedBy</th>
-                @*<th>Toggle</th>*@
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var news in Model)
-            {
-                <tr>
-                    <td>@news.Id</td>
-                    <td>@news.Title</td>
-                    <td>@news.WriteDate</td>
-                    <td>@news.LastRevisionDate</td>
-                    <td>@news.PublishedBy</td>
-                    @*@if (news.IsActive)
-                    {
-                        <td><a class="btn btn-danger" href="/News/Index?id=@news.Id">Disable</a></td>
-                    }
-                    else
-                    {
-                        <td><a class="btn btn-success" href="/News/Index?id=@news.Id">Able</a></td>
-                    }*@
-                    <td><a class="btn btn-warning" href="/News/Update?id=@news.Id">Able</a></td>
-                    <td><a class="btn btn-danger" href="/News/Delete?id=@news.Id">Able</a></td>
-                </tr>
-            }
-        </tbody>
-    </table>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>WriteDate</th>
+        <th>LastRevisionDate</th>
+        <th>PublishedBy</th>
+        @*
+        <th>Toggle</th>
+        *@
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var news in Model)
+      {
+        <tr>
+          <td>@news.Id</td>
+          <td>@news.Title</td>
+          <td>@news.WriteDate</td>
+          <td>@news.LastRevisionDate</td>
+          <td>@news.PublishedBy</td>
+          @*
+          @if (news.IsActive)
+          {
+            <td><a class="btn btn-danger" href="/News/Index?id=@news.Id">Disable</a></td>
+          }
+          else
+          {
+            <td><a class="btn btn-success" href="/News/Index?id=@news.Id">Able</a></td>
+          }
+          *@
+          <td><a class="btn btn-warning" href="/News/Update?id=@news.Id">Able</a></td>
+          <td><a class="btn btn-danger" href="/News/Delete?id=@news.Id">Able</a></td>
+        </tr>
+      }
+    </tbody>
+  </table>
 </main>
