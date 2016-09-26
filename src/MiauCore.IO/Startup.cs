@@ -82,7 +82,7 @@ namespace MiauCore.IO
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute("Admin", "{area:exists}/{controller=Account}/{action=Index}/{id?}");               
+                routes.MapRoute("Default", "{area:exists}/{controller=Account}/{action=Index}/{id?}");               
             });            
         }
     }

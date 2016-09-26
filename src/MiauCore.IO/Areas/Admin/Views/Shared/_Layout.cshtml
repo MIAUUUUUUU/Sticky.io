@@ -15,7 +15,7 @@
   <body>
     @if (SignInManager.IsSignedIn(User))
     {
-      <form asp-area="Admin" asp-controller="Login" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
+      <form asp-area="Admin" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
           <li>
             <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
