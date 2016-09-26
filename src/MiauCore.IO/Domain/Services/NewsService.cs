@@ -21,7 +21,6 @@ namespace MiauCore.IO.Domain.Services
         {
             var news = await _context.News
                 .Include(product => product.Product)
-                .Include(user => user.PublishedBy)
                 .FirstOrDefaultAsync(n => n.Id == id);
 
             return news;
@@ -31,10 +30,9 @@ namespace MiauCore.IO.Domain.Services
         {
             var news = await _context.News
                 .Include(product => product.Product)
-                //.Include(user => user.PublishedBy)
                 .ToListAsync();
 
-            return news;
+            return news.OrderByDescending(x => x.WriteDate).ToList();
         }
     }
 }

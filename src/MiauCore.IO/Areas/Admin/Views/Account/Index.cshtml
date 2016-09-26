@@ -4,7 +4,7 @@
     ViewBag.Title = "Account - Login";
 }
 
-<form id="form-login" class="col-md-6 col-md-offset-3 gap-top-x-lg" asp-controller="Admin/Account/Index" method="post">
+<form id="form-login" class="col-md-6 col-md-offset-3 gap-top-x-lg" asp-area="Admin" asp-controller="Account" asp-action="Index" method="post">
   <h1>Login</h1>
   <div class="form-group">
     <label asp-for="User.Login"></label>

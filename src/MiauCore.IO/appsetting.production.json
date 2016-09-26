@@ -1,0 +1,5 @@
+﻿{
+  "database": {
+    "connection": "Server=miaucoresql.database.windows.net;Database=MiauCoreSql;User=mateus;Password=@Aa56316367;Trusted_Connection=True;MultipleActiveResultSets=true;"
+  }
+}

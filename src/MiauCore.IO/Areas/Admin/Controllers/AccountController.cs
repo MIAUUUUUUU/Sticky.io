@@ -24,6 +24,11 @@ namespace MiauCore.IO.Areas.Admin.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 
@@ -35,7 +40,7 @@ namespace MiauCore.IO.Areas.Admin.Controllers
 
             if (result.Succeeded)
             {
-                return Redirect("/Admin/Home/Index");
+                return RedirectToAction("Index", "Home");
             }
 
             return View(model);
