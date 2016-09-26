@@ -76,16 +76,13 @@ namespace MiauCore.IO
                         await next();
                     }
                 });
-                app.UseDeveloperExceptionPage();
             }
+
+            app.UseStatusCodePages();
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute("Admin", "{area:exists}/{controller=Account}/{action=Index}/{id?}");
-
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");                
+                routes.MapRoute("Admin", "{area:exists}/{controller=Account}/{action=Index}/{id?}");               
             });            
         }
     }
