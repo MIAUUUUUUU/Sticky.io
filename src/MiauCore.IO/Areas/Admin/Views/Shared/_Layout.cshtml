@@ -17,8 +17,8 @@
       @if (SignInManager.IsSignedIn(User))
       {
         <form id="logoutForm" class="container-fluid text-right" asp-area="Admin" asp-controller="Login" asp-action="LogOff" method="post">
-          <a class="btn btn-link" asp-controller="Manage/Index" title="Manage">Hello, @UserManager.GetUserName(User)</a>
-          <button class="btn btn-inverse navbar-btn navbar-link" type="submit">Log off</button>
+          <a class="btn btn-link navbar-btn" asp-controller="Manage/Index" title="Manage">Hello, @UserManager.GetUserName(User)</a>
+          <button class="btn btn-primary navbar-btn" type="submit">Log off</button>
         </form>
       }
     </header>
