@@ -6,29 +6,25 @@
 
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@ViewBag.Title</title>
     <link asp-href-include="~/css/custom-bootstrap.css" rel="stylesheet" />
-  </head>
-  <body>
-    @if (SignInManager.IsSignedIn(User))
-    {
-      <form asp-area="Admin" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
-        <ul class="nav navbar-nav navbar-right">
-          <li>
-            <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
-          </li>
-          <li>
-            <button type="submit" class="btn btn-link navbar-btn navbar-link">Log off</button>
-          </li>
-        </ul>
-      </form>
-    }
+</head>
+<body>
+    <header class="navbar navbar-inverse">
+        @if (SignInManager.IsSignedIn(User))
+      {
+            <form id="logoutForm" class="container-fluid text-right" asp-area="Admin" asp-controller="Account" asp-action="LogOff" method="post">
+                <a class="btn btn-link navbar-btn" href="#" title="Manage">Hello, @UserManager.GetUserName(User)</a>
+                <button class="btn btn-primary navbar-btn" type="submit">Log off</button>
+            </form>
+      }
+    </header>
     <main role="main">
-      @RenderBody()
+        @RenderBody()
     </main>
     @RenderSection("scripts", false)
-  </body>
+</body>
 </html>
