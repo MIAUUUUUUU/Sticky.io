@@ -4,7 +4,7 @@
     ViewBag.Title = "Account - Register";
 }
 
-<form id="form-register" class="col-md-6 col-md-offset-3 gap-top-x-lg" asp-controller="Admin/Account/Register" method="post">
+<form id="form-register" class="col-md-6 col-md-offset-3 gap-top-x-lg" asp-area="Admin" asp-controller="Account" asp-action="Register" method="post">
   <h1>Register</h1>
   <div class="form-group">
     <label asp-for="User.Login"></label>

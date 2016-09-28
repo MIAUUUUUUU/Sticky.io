@@ -62,7 +62,7 @@ namespace MiauCore.IO.Areas.Admin.Controllers
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, isPersistent: false);
-                return Redirect("/Home/Index");
+                return Redirect("/Admin/Home/Index");
             }
 
             vm.IdentityErrors = result.Errors;
