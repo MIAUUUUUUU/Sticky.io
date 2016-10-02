@@ -69,6 +69,7 @@ class UI {
         if (error === null) return true;
 
         this.elements.errorContainer.appendChild(error);
+
         return false;
     }
 }
