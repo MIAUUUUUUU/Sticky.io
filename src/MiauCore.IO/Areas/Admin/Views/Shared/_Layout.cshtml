@@ -6,25 +6,65 @@
 
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@ViewBag.Title</title>
     <link asp-href-include="~/css/custom-bootstrap.css" rel="stylesheet" />
-</head>
-<body>
+    @RenderSection("styles", false)
+  </head>
+  <body lang="en-us">
     <header class="navbar navbar-inverse">
-        @if (SignInManager.IsSignedIn(User))
+      @if (SignInManager.IsSignedIn(User))
       {
-            <form id="logoutForm" class="container-fluid text-right" asp-area="Admin" asp-controller="Account" asp-action="LogOff" method="post">
-                <a class="btn btn-link navbar-btn" href="#" title="Manage">Hello, @UserManager.GetUserName(User)</a>
-                <button class="btn btn-primary navbar-btn" type="submit">Log off</button>
+        <div role="navigation" class="container-fluid">
+          <nav id="dropdown-itens-menu" class="collapse navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav">
+              <li><a asp-area="Admin" asp-controller="Home" asp-action="Index">Home</a></li>
+              <li class="dropdown">
+                <a id="toggler-news" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  News
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="toggler-news">
+                  <li><a asp-area="Admin" asp-controller="News" asp-action="Add">Add</a></li>
+                  <li><a asp-area="Admin" asp-controller="News" asp-action="Index">Manage</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a id="toggler-product" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  Product
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="toggler-product">
+                  <li><a asp-area="Admin" asp-controller="Product" asp-action="Add">Add</a></li>
+                  <li><a asp-area="Admin" asp-controller="Product" asp-action="Index">Manage</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a id="toggler-product" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  Reward
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="toggler-product">
+                  <li><a asp-area="Admin" asp-controller="Reward" asp-action="Add">Add</a></li>
+                  <li><a asp-area="Admin" asp-controller="Reward" asp-action="Index">Manage</a></li>
+                </ul>
+              </li>
+            </ul>
+            <form class="navbar-right" asp-area="Admin" asp-controller="Account" asp-action="LogOff" method="post">
+              <a class="btn btn-link navbar-btn" href="#" title="Manage">Hello, @UserManager.GetUserName(User)</a>
+              <button class="btn btn-primary navbar-btn" type="submit">Log off</button>
             </form>
+          </nav>
+        </div>
       }
     </header>
     <main role="main">
-        @RenderBody()
+      @RenderBody()
     </main>
+    <script asp-src-include="~/js/jquery.js"></script>
+    <script asp-src-include="~/js/bootstrap.js"></script>
     @RenderSection("scripts", false)
-</body>
+  </body>
 </html>
