@@ -8,8 +8,12 @@
     @Html.TextBoxFor(m => m.Reward.Price)
     @Html.DisplayNameFor(m => m.Reward.Prize)
     @Html.TextAreaFor(m => m.Reward.Prize)
-    @Html.TextAreaFor(m => m.ProductList)
-    @Html.DropDownListFor(m => m.ProductId, Model.ProductList)
+    <select id="Products" asp-for="ProductId" class="form-control">
+        @foreach (var product in Model.Products)
+        {
+            <option value="@product.Id">@product.Name</option>
+        }
+    </select>
     <input type="submit" value="Add">
 }
 
