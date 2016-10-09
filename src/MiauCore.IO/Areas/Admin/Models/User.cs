@@ -4,6 +4,7 @@ namespace MiauCore.IO.Areas.Admin.Models
 {
     public class User : IGenericEntity
     {
+        public string IdentityId { get; set; }
         public int Id { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }

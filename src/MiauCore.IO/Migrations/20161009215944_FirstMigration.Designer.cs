@@ -8,7 +8,7 @@ using MiauCore.IO.Data;
 namespace MiauCore.IO.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20160914000705_FirstMigration")]
+    [Migration("20161009215944_FirstMigration")]
     partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -93,15 +93,15 @@ namespace MiauCore.IO.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Address");
+
+                    b.Property<string>("Company");
+
                     b.Property<string>("Email");
 
-                    b.Property<string>("MobilePhone");
+                    b.Property<string>("Message");
 
-                    b.Property<string>("Name");
-
-                    b.Property<int>("Rate");
-
-                    b.Property<string>("TaxId");
+                    b.Property<string>("NERC");
 
                     b.Property<string>("Telephone");
 
@@ -145,8 +145,6 @@ namespace MiauCore.IO.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ApplicationUserId");
-
                     b.Property<string>("BannerImage");
 
                     b.Property<string>("Content");
@@ -164,8 +162,6 @@ namespace MiauCore.IO.Migrations
                     b.Property<DateTime>("WriteDate");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("ProductId");
 
@@ -341,12 +337,8 @@ namespace MiauCore.IO.Migrations
 
             modelBuilder.Entity("MiauCore.IO.Models.News", b =>
                 {
-                    b.HasOne("MiauCore.IO.Domain.Models.ApplicationUser")
-                        .WithMany("PublishedNews")
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("MiauCore.IO.Models.Product", "Product")
-                        .WithMany("News")
+                        .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

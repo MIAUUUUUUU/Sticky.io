@@ -6,6 +6,5 @@ namespace MiauCore.IO.Domain.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        public IEnumerable<News> PublishedNews { get; set; }
     }
 }

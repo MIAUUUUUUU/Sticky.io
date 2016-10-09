@@ -1,0 +1,23 @@
+﻿@model List<MiauCore.IO.Domain.Models.ApplicationUser>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <td>Id</td>
+            <td>UserName</td>
+            <td>Email</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td><a class="btn btn-danger" href="/Admin/Account/Remove/@user.Id">Delete</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
