@@ -1,14 +1,15 @@
 ﻿using MiauCore.IO.Areas.Admin.Models;
 using MiauCore.IO.Domain.Infra;
 using MiauCore.IO.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MiauCore.IO.Areas.Admin.Controllers
 {
+    [Authorize]
+    [Area("Admin")]
     public class InvestorController : Controller
     {
         IUnitOfWork _unitOfWork;

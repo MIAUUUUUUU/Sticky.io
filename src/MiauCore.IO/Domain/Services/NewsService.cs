@@ -30,6 +30,7 @@ namespace MiauCore.IO.Domain.Services
         {
             var news = await _context.News
                 .Include(product => product.Product)
+                .Where(n => n.IsActive)
                 .ToListAsync();
 
             return news.OrderByDescending(x => x.WriteDate).ToList();
