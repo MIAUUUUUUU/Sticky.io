@@ -1,0 +1,8 @@
+﻿@model MiauCore.IO.Areas.Admin.Models.User
+
+<form asp-area="Admin" asp-controller="Account" asp-action="Update" method="post">
+    <input asp-for="IdentityId" type="hidden" />
+    <input asp-for="Login" type="text" />
+    <input asp-for="Email" type="text" />
+    <input type="submit" name="Update" />
+</form>

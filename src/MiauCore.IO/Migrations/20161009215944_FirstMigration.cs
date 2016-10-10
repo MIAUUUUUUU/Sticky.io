@@ -58,11 +58,11 @@ namespace MiauCore.IO.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Address = table.Column<string>(nullable: true),
+                    Company = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
-                    MobilePhone = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    Rate = table.Column<int>(nullable: false),
-                    TaxId = table.Column<string>(nullable: true),
+                    Message = table.Column<string>(nullable: true),
+                    NERC = table.Column<string>(nullable: true),
                     Telephone = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -159,7 +159,6 @@ namespace MiauCore.IO.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ApplicationUserId = table.Column<string>(nullable: true),
                     BannerImage = table.Column<string>(nullable: true),
                     Content = table.Column<string>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
@@ -172,12 +171,6 @@ namespace MiauCore.IO.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_News", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_News_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_News_Products_ProductId",
                         column: x => x.ProductId,
@@ -331,11 +324,6 @@ namespace MiauCore.IO.Migrations
                 name: "IX_InvestorReward_RewardId",
                 table: "InvestorReward",
                 column: "RewardId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_News_ApplicationUserId",
-                table: "News",
-                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_News_ProductId",
