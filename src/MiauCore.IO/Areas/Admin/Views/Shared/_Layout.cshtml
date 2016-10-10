@@ -52,10 +52,10 @@
                 </ul>
               </li>
             </ul>
-            <form class="navbar-right" asp-area="Admin" asp-controller="Account" asp-action="LogOff" method="post">
+            <nav class="navbar-nav navbar-right" role="navigation">
               <a class="btn btn-link navbar-btn" href="#" title="Manage">Hello, @UserManager.GetUserName(User)</a>
-              <button class="btn btn-primary navbar-btn" type="submit">Log off</button>
-            </form>
+              <a asp-area="Admin" asp-controller="Account" asp-action="LogOff" class="btn btn-primary navbar-btn">Log off</a>
+            </nav>
           </nav>
         </div>
       }
