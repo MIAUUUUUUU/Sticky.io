@@ -390,11 +390,13 @@ legend {
 }
 
 //
-// Remove default vertical scrollbar in IE 8/9/10/11.
+// 1. Remove default vertical scrollbar in IE 8/9/10/11.
+// 2. Disable the resize
 //
 
 textarea {
-  overflow: auto;
+  overflow: auto; // 1
+  resize: none; // 2
 }
 
 //
