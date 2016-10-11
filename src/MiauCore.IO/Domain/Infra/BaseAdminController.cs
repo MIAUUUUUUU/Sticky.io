@@ -70,7 +70,7 @@ namespace MiauCore.IO.Domain.Infra
             }
         }
 
-        [HttpPost]
+        [HttpGet]
         public virtual async Task<bool> Delete(int id)
         {
             try

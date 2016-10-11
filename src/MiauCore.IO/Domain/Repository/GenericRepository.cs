@@ -27,7 +27,6 @@ namespace MiauCore.IO.Domain.Repository
         {
             var entity = await GetById(id);
             _dbSet.Remove(entity);
-            _context.Entry(entity).State = EntityState.Deleted;
         }
 
         public async Task<T> GetById(int id)
@@ -43,7 +42,6 @@ namespace MiauCore.IO.Domain.Repository
         public void Update(T entity)
         {
             _dbSet.Update(entity);
-            _context.Entry(entity).State = EntityState.Modified;
         }
     }
 }
