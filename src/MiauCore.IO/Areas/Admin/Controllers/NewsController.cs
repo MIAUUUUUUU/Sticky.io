@@ -39,7 +39,7 @@ namespace MiauCore.IO.Areas.Admin.Controllers
             {
                 Products = products
             };
-            
+
             return View(viewModel);
         }
 
@@ -49,7 +49,7 @@ namespace MiauCore.IO.Areas.Admin.Controllers
             var newsRepo = _unitOfWork.CreateRepository<News>();
             var news = viewModel.News;
             ApplicationUser user = _userManager.FindByNameAsync(User.Identity.Name).Result;
-            
+
             news.PublishedBy = user.UserName;
             news.WriteDate = DateTime.Now;
             news.LastRevisionDate = DateTime.Now;
@@ -104,6 +104,24 @@ namespace MiauCore.IO.Areas.Admin.Controllers
             await _unitOfWork.SaveChanges();
 
             return RedirectToAction("Index", "News");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Active(int id)
+        {
+            var newsRepo = _unitOfWork.CreateRepository<News>();
+            var news = await newsRepo.GetById(id);
+
+            if (news != null)
+            {
+                news.IsActive = !news.IsActive;
+
+                newsRepo.Update(news);
+
+                await _unitOfWork.SaveChanges();
+            }
+
+            return Redirect("/Admin/News/Index");
         }
     }
 }

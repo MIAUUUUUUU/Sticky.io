@@ -5,46 +5,56 @@
 }
 
 <main role="main" class="col-md-6 col-md-offset-3">
-  <h1>News</h1>
+    <h1>News</h1>
 
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Id</th>
-        <th>Title</th>
-        <th>WriteDate</th>
-        <th>LastRevisionDate</th>
-        <th>PublishedBy</th>
-        @*
-        <th>Toggle</th>
-        *@
-        <th>Edit</th>
-        <th>Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-      @foreach (var news in Model)
-      {
-        <tr>
-          <td>@news.Id</td>
-          <td>@news.Title</td>
-          <td>@news.WriteDate</td>
-          <td>@news.LastRevisionDate</td>
-          <td>@news.PublishedBy</td>
-          @*
-          @if (news.IsActive)
-          {
-            <td><a class="btn btn-danger" href="/News/Index?id=@news.Id">Disable</a></td>
-          }
-          else
-          {
-            <td><a class="btn btn-success" href="/News/Index?id=@news.Id">Able</a></td>
-          }
-          *@
-          <td><a class="btn btn-warning" href="/Admin/News/Update?id=@news.Id">Able</a></td>
-          <td><a class="btn btn-danger" href="/Admin/News/Delete?id=@news.Id">Able</a></td>
-        </tr>
-      }
-    </tbody>
-  </table>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>WriteDate</th>
+                <th>LastRevisionDate</th>
+                <th>PublishedBy</th>
+                @*
+                    <th>Toggle</th>
+                *@
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var news in Model)
+            {
+                <tr>
+                    <td>@news.Id</td>
+                    <td>@news.Title</td>
+                    <td>@news.WriteDate</td>
+                    <td>@news.LastRevisionDate</td>
+                    <td>@news.PublishedBy</td>
+                    @*
+                        @if (news.IsActive)
+                        {
+                          <td><a class="btn btn-danger" href="/News/Index?id=@news.Id">Disable</a></td>
+                        }
+                        else
+                        {
+                          <td><a class="btn btn-success" href="/News/Index?id=@news.Id">Able</a></td>
+                        }
+                    *@
+                    <td><a class="btn btn-warning" href="/Admin/News/Update?id=@news.Id">Update</a></td>
+                    <td><a class="btn btn-danger" href="/Admin/News/Delete?id=@news.Id">Delete</a></td>
+                    <td>
+                        @if (news.IsActive)
+                        {
+                            <a class="btn btn-primary" href="/Admin/News/Active?id=@news.Id">Deactivate</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-primary" href="/Admin/News/Active?id=@news.Id">Activate</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </main>
