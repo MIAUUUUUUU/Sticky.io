@@ -51,10 +51,21 @@
                   <li><a asp-area="Admin" asp-controller="Reward" asp-action="Index">Manage</a></li>
                 </ul>
               </li>
+              <li>
+                <a asp-area="Admin" asp-controller="Client" asp-action="Index">Client</a>
+              </li>
+              <li>
+                <a asp-area="Admin" asp-controller="Investor" asp-action="Index">Investor</a>
+              </li>
             </ul>
             <nav class="navbar-nav navbar-right" role="navigation">
-              <a class="btn btn-link navbar-btn" href="#" title="Manage">Hello, @UserManager.GetUserName(User)</a>
-              <a asp-area="Admin" asp-controller="Account" asp-action="LogOff" class="btn btn-primary navbar-btn">Log off</a>
+              <form class="dropdown" asp-area="Admin" asp-controller="Account" asp-action="LogOff">
+                <a href="toggle-username" class="dropdown-toggle">Hello, @UserManager.GetUserName(User)</a>
+                <ul class="dropdown-menu">
+                  <li><a asp-area="Admin" asp-controller="Account" asp-action="Update">Update</a></li>
+                  <li><a asp-area="Admin" asp-controller="Account" asp-action="LogOff">Log Off</a></li>
+                </ul>
+              </form>
             </nav>
           </nav>
         </div>
