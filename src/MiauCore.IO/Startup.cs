@@ -67,15 +67,7 @@ namespace MiauCore.IO
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.Use(async (context, next) =>
-                {
-                    await next();
-                    if (context.Response.StatusCode == 404)
-                    {
-                        context.Request.Path = "/Home";
-                        await next();
-                    }
-                });
+                app.UseStatusCodePagesWithRedirects("~/Errors/{0}");
             }
 
             app.UseStatusCodePages();

@@ -35,6 +35,7 @@ namespace MiauCore.IO.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Index(LoginViewModel model)
         {
             var result = await _signInManager.PasswordSignInAsync(model.User.Login, model.User.Password, false, false);
@@ -125,7 +126,7 @@ namespace MiauCore.IO.Areas.Admin.Controllers
             return View(vm);
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> LogOff()
         {
             await _signInManager.SignOutAsync();
