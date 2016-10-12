@@ -60,8 +60,10 @@
             </ul>
             <nav class="navbar-nav navbar-right" role="navigation">
               <form class="dropdown" asp-area="Admin" asp-controller="Account" asp-action="LogOff">
-                <a href="toggle-username" class="dropdown-toggle">Hello, @UserManager.GetUserName(User)</a>
-                <ul class="dropdown-menu">
+                <a id="toggle-username" class="dropdown-toggle btn btn-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  Hello, @UserManager.GetUserName(User)
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="toggle-username">
                   <li><a asp-area="Admin" asp-controller="Account" asp-action="Update">Update</a></li>
                   <li><a asp-area="Admin" asp-controller="Account" asp-action="LogOff">Log Off</a></li>
                 </ul>
