@@ -1,0 +1,38 @@
+﻿@model List<MiauCore.IO.Models.Reward>
+
+@{
+    ViewBag.Title = "Account - Subscribe";
+}
+
+<main role="main" class="col-md-6 col-md-offset-3">
+    <h1>Rewards</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Product</th>
+                <th>Prize</th>
+                <th>Quantity</th>
+                <th colspan="3">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var news in Model)
+            {
+                <tr>
+                    <td>@news.Id</td>
+                    <td>@news.Name</td>
+                    <td>@news.Price</td>
+                    <td>@news.Product.Name</td>
+                    <td>@news.Prize</td>
+                    <td>@news.Quantity</td>
+                    <td><a class="btn btn-warning" href="/Admin/Reward/Update?id=@news.Id">Update</a></td>
+                    <td><a class="btn btn-danger" href="/Admin/Reward/Delete?id=@news.Id">Delete</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</main>

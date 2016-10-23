@@ -1,0 +1,33 @@
+﻿@model MiauCore.IO.Controllers.RewardViewModel
+
+@foreach (var reward in Model.Rewards)
+{
+    <p>
+        @reward.Name @reward.Prize @reward.Price
+    </p>
+}
+
+@Html.BeginForm("Donate", "Reward", FormMethod.Post)
+{
+@Html.LabelFor(r => r.Investor.Address)
+@Html.TextBoxFor(r => r.Investor.Address)
+@Html.LabelFor(r => r.Investor.Company)
+@Html.TextBoxFor(r => r.Investor.Company)
+@Html.LabelFor(r => r.Investor.Email)
+@Html.TextBoxFor(r => r.Investor.Email)
+@Html.LabelFor(r => r.Investor.Message)
+@Html.TextBoxFor(r => r.Investor.Message)
+@Html.LabelFor(r => r.Investor.NERC)
+@Html.TextBoxFor(r => r.Investor.NERC)
+@Html.LabelFor(r => r.Investor.Telephone)
+@Html.TextBoxFor(r => r.Investor.Telephone)
+@Html.LabelFor(r => r.HowMuch)
+@Html.TextBoxFor(r => r.HowMuch)
+<select id="Rewards" asp-for="RewardId" class="form-control">
+    @foreach (var product in Model.Rewards)
+    {
+        <option value="@product.Id">@product.Name</option>
+    }
+</select>
+<input type="submit" />
+}

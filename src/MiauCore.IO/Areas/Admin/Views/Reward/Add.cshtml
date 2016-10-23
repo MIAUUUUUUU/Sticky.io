@@ -8,6 +8,8 @@
     @Html.TextBoxFor(m => m.Reward.Price)
     @Html.DisplayNameFor(m => m.Reward.Prize)
     @Html.TextAreaFor(m => m.Reward.Prize)
+    @Html.DisplayNameFor(m => m.Reward.Quantity)
+    @Html.TextAreaFor(m => m.Reward.Quantity)
     <select id="Products" asp-for="ProductId" class="form-control">
         @foreach (var product in Model.Products)
         {
